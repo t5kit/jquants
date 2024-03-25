@@ -43,7 +43,7 @@ print(listed_info)
 print(daily_quotes)
 ```
 
-# 全データ取得コード
+# 全データ取得プログラム
 すべてのデータを取得するための`get_all_data.py`を付属しています。cloneしたjquantsディレクトリにて以下コマンドを実行します。
 
 ```bash
@@ -54,6 +54,21 @@ python get_all_data.py
 
 ```bash
 python get_all_data.py -test
+```
+
+# データチェックプログラム
+取得したデータをGoogle Driveなどにアップロードした場合に、（ファイル数の多さやサイズの大きさのためか）データが欠落してしまうケースがありました。データをチェックするプログラムを添付します。
+
+```bash
+python data_checker.py path/to/directory
+```
+
+Google Drive側のデータチェックを行うには、Google Colaboraoryで下記のように本リポジトリをクローンしたあとでデータチェックを行ってください。
+
+```bash
+!git clone https://github.com/t5kit/jquants.git
+
+!python /content/jquants/data_checker.py path/to/directory
 ```
 
 # API対応表
