@@ -56,6 +56,21 @@ There's a test mode that outputs the loop process only once at the beginning to 
 python get_all_data.py -test
 ```
 
+# Data Check Program
+There have been cases where data was missing after uploading the acquired data to Google Drive or similar platforms, possibly due to the large number of files or the size of the data. A program to check the data is attached.
+
+```bash
+python data_checker.py path/to/directory
+```
+
+To perform a data check on the Google Drive side, please clone this repository in Google Colaboratory as follows and then proceed with the data check.
+
+```bash
+!git clone https://github.com/t5kit/jquants.git
+
+!python /content/jquants/data_checker.py path/to/directory
+```
+
 # API Correspondence Table
 | API | Endpoints | Methods |
 |:--------|:--------:|--------:|
