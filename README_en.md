@@ -49,7 +49,9 @@ The script `get_all_data.py` is provided to fetch all available data.
 ```bash
 python get_all_data.py
 ```
+Output destination is `./data`.
 
+## Test Mode
 There's a test mode that outputs the loop process only once at the beginning to check the structure of the output file.
 
 ```bash
