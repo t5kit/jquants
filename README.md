@@ -59,6 +59,14 @@ python get_all_data.py
 python get_all_data.py -test
 ```
 
+## 特定の日付までのデータ取得方法
+
+```bash
+python get_all_data.py -until YYYYMMDD
+```
+
+このコマンドを使用すると、指定した日付（YYYYMMDD）までのデータを取得します。指定した日付より前のデータは取得しません。
+
 # データチェックプログラム
 取得したデータをGoogle Driveなどにアップロードした場合に、（ファイル数の多さやサイズの大きさのためか）データが欠落してしまうケースがありました。データをチェックするプログラムを添付します。
 
