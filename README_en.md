@@ -58,6 +58,14 @@ There's a test mode that outputs the loop process only once at the beginning to 
 python get_all_data.py -test
 ```
 
+## Method for Obtaining Data Until a Specific Date
+
+```bash
+python get_all_data.py -until YYYYMMDD
+```
+
+This command allows you to retrieve data up to the specified date (YYYYMMDD). Data prior to the specified date will not be retrieved.
+
 # Data Check Program
 There have been cases where data was missing after uploading the acquired data to Google Drive or similar platforms, possibly due to the large number of files or the size of the data. A program to check the data is attached.
 

@@ -4,57 +4,6 @@ import os
 import pandas as pd
 from datetime import datetime, timedelta
 import sys
-import shutil
-
-SECTOR_33_CODES = {
-    "0050": "水産・農林業",
-    "1050": "鉱業",
-    "2050": "建設業",
-    "3050": "食料品",
-    "3100": "繊維製品",
-    "3150": "パルプ・紙",
-    "3200": "化学",
-    "3250": "医薬品",
-    "3300": "石油・石炭製品",
-    "3350": "ゴム製品",
-    "3400": "ガラス・土石製品",
-    "3450": "鉄鋼",
-    "3500": "非鉄金属",
-    "3550": "金属製品",
-    "3600": "機械",
-    "3650": "電気機器",
-    "3700": "輸送用機器",
-    "3750": "精密機器",
-    "3800": "その他製品",
-    "4050": "電気・ガス業",
-    "5050": "陸運業",
-    "5100": "海運業",
-    "5150": "空運業",
-    "5200": "倉庫・運輸関連業",
-    "5250": "情報・通信業",
-    "6050": "卸売業",
-    "6100": "小売業",
-    "7050": "銀行業",
-    "7100": "証券・商品先物取引業",
-    "7150": "保険業",
-    "7200": "その他金融業",
-    "8050": "不動産業",
-    "9050": "サービス業",
-    "9999": "その他",
-}
-
-INDEX_CODES = {
-    "0000": "TOPIX指数",
-    "0028": "TOPIX Core30 指数",
-    "0029": "TOPIX Large70 指数",
-    "002A": "TOPIX 100 指数",
-    "002B": "TOPIX Mid400 指数",
-    "002C": "TOPIX 500 指数",
-    "002D": "TOPIX Small 指数",
-    "002E": "TOPIX 1000 指数",
-    "0070": "東証グロース市場250指数（旧：東証マザーズ指数）",
-    "0075": "東証REIT指数",
-}
 
 def message(msg: str):
     log_message = f"[{datetime.now()}] {msg}"
@@ -72,6 +21,17 @@ if __name__ == "__main__":
     if '-test' in sys.argv:
         test = True
 
+    if '-until' in sys.argv:
+        until_index = sys.argv.index('-until') + 1
+        until_date_str = sys.argv[until_index]
+
+        try:
+            until_date = datetime.strptime(until_date_str, '%Y%m%d')
+            until_date_str = until_date.strftime("%Y-%m-%d")
+        except ValueError:
+            print("Error: Invalid date format. Please provide the date in YYYYMMDD format.")
+            exit()
+
     email = os.getenv("JQUANTS_EMAIL")
     password = os.getenv("JQUANTS_PASSWORD")
     if not email:
@@ -88,17 +48,13 @@ if __name__ == "__main__":
     markets_trading_calendar = pd.DataFrame(ret["trading_calendar"])
     markets_trading_calendar.to_csv(f"./data/markets_trading_calendar.csv", index=False)
 
-    date_list = markets_trading_calendar[markets_trading_calendar["HolidayDivision"] != "0"]["Date"].values.tolist()
-    # 昨日の日付を取得
     yesterday = datetime.now() - timedelta(days=1)
     yesterday_str = yesterday.strftime("%Y-%m-%d")
-    # 昨日の日付がリスト内にあるか確認してインデックスを取得
-    try:
-        yesterday_index = date_list.index(yesterday_str)
-        # 昨日までの日付リストに切り取る
-        date_list = date_list[:yesterday_index]
-    except ValueError:
-        print("yesterday not in date_list.")
+
+    date_list = markets_trading_calendar[
+        (markets_trading_calendar["Date"] >= until_date_str)&
+        (markets_trading_calendar["Date"] <= yesterday_str)&
+        (markets_trading_calendar["HolidayDivision"] != "0")]["Date"].values.tolist()
 
     message("listed_info")
     ret = jq.listed_info()
