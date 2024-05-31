@@ -49,6 +49,9 @@ print(daily_quotes)
 ```bash
 python get_all_data.py
 ```
+出力先は`./data`です。
+
+## テストモード
 
 出力ファイルの構成を確認するために、ループ処理を最初の1回だけ出力するtestモードがあります。
 
