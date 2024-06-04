@@ -4,6 +4,7 @@ import os
 import pandas as pd
 from datetime import datetime, timedelta
 import sys
+import pytz
 
 def message(msg: str):
     log_message = f"[{datetime.now()}] {msg}"
@@ -48,7 +49,9 @@ if __name__ == "__main__":
     markets_trading_calendar = pd.DataFrame(ret["trading_calendar"])
     markets_trading_calendar.to_csv(f"./data/markets_trading_calendar.csv", index=False)
 
-    yesterday = datetime.now() - timedelta(days=1)
+    # 日本のタイムゾーンを取得
+    jst = pytz.timezone('Asia/Tokyo')
+    yesterday = datetime.now(jst) - timedelta(days=1)
     yesterday_str = yesterday.strftime("%Y-%m-%d")
 
     date_list = markets_trading_calendar[
