@@ -84,7 +84,10 @@ if __name__ == "__main__":
 
                 prices_daily_quotes = pd.DataFrame(ret["daily_quotes"])
                 if not prices_daily_quotes.empty:
-                    prices_daily_quotes.to_csv(output_path, mode='a', header=pagination_key is None, index=False)
+                    if pagination_key is None:
+                        prices_daily_quotes.to_csv(output_path, index=False)
+                    else:
+                        prices_daily_quotes.to_csv(output_path, mode='a', header=True, index=False)
 
                 pagination_key = ret.get("pagination_key")
                 if not pagination_key:
@@ -110,7 +113,10 @@ if __name__ == "__main__":
 
             markets_trades_spec = pd.DataFrame(ret["trades_spec"])
             if not markets_trades_spec.empty:
-                markets_trades_spec.to_csv(f"./data/markets_trades_spec.csv", mode='a', header=pagination_key is None, index=False)
+                if pagination_key is None:
+                    markets_trades_spec.to_csv(f"./data/markets_trades_spec.csv", index=False)
+                else:
+                    markets_trades_spec.to_csv(f"./data/markets_trades_spec.csv", mode='a', header=False, index=False)
 
             pagination_key = ret.get("pagination_key")
             if not pagination_key:
@@ -139,8 +145,11 @@ if __name__ == "__main__":
 
                 markets_weekly_margin_interest = pd.DataFrame(ret["weekly_margin_interest"])
                 if not markets_weekly_margin_interest.empty:
-                    markets_weekly_margin_interest.to_csv(output_path, mode='a', header=pagination_key is None, index=False)
-
+                    if pagination_key is None:
+                        markets_weekly_margin_interest.to_csv(output_path, index=False)
+                    else:
+                        markets_weekly_margin_interest.to_csv(output_path, mode='a', header=False, index=False)
+                        
                 pagination_key = ret.get("pagination_key")
                 if not pagination_key:
                     break
@@ -174,7 +183,10 @@ if __name__ == "__main__":
 
                 markets_short_selling = pd.DataFrame(ret["short_selling"])
                 if not markets_short_selling.empty:
-                    markets_short_selling.to_csv(output_path, mode='a', header=pagination_key is None, index=False)
+                    if pagination_key is None:
+                        markets_short_selling.to_csv(output_path, index=False)
+                    else:
+                        markets_short_selling.to_csv(output_path, mode='a', header=False, index=False)
 
                 pagination_key = ret.get("pagination_key")
                 if not pagination_key:
@@ -209,7 +221,10 @@ if __name__ == "__main__":
 
                 markets_breakdown = pd.DataFrame(ret["breakdown"])
                 if not markets_breakdown.empty:
-                    markets_breakdown.to_csv(output_path, mode='a', header=pagination_key is None, index=False)
+                    if pagination_key is None:
+                        markets_breakdown.to_csv(output_path, index=False)
+                    else:
+                        markets_breakdown.to_csv(output_path, mode='a', header=True, index=False)
 
                 pagination_key = ret.get("pagination_key")
                 if not pagination_key:
@@ -244,7 +259,10 @@ if __name__ == "__main__":
 
                 indices = pd.DataFrame(ret["indices"])
                 if not indices.empty:
-                    indices.to_csv(output_path, mode='a', header=pagination_key is None, index=False)
+                    if pagination_key is None:
+                        indices.to_csv(output_path, index=False)
+                    else:
+                        indices.to_csv(output_path, mode='a', header=False, index=False)
 
                 pagination_key = ret.get("pagination_key")
                 if not pagination_key:
@@ -302,8 +320,11 @@ if __name__ == "__main__":
 
                 fins_statements = pd.DataFrame(ret["statements"])
                 message(f"len= {len(fins_statements)}")
-                if len(fins_statements) > 0:
-                    fins_statements.to_csv(output_path, mode='a', header=pagination_key is None, index=False)
+                if not fins_statements.empty:
+                    if pagination_key is None:
+                        fins_statements.to_csv(output_path, index=False)
+                    else:
+                        fins_statements.to_csv(output_path, mode='a', header=False, index=False)
 
                 pagination_key = ret.get("pagination_key")
                 if not pagination_key:
@@ -338,8 +359,11 @@ if __name__ == "__main__":
 
                 fins_fs_details = pd.DataFrame(ret["fs_details"])
                 message(f"len= {len(fins_fs_details)}")
-                if len(fins_fs_details) > 0:
-                    fins_fs_details.to_csv(output_path, mode='a', header=pagination_key is None, index=False)
+                if not fins_fs_details.empyt:
+                    if pagination_key is None:
+                        fins_fs_details.to_csv(output_path, index=False)
+                    else:
+                        fins_fs_details.to_csv(output_path, mode='a', header=False, index=False)
 
                 pagination_key = ret.get("pagination_key")
                 if not pagination_key:
@@ -374,8 +398,11 @@ if __name__ == "__main__":
 
                 fins_dividend = pd.DataFrame(ret["dividend"])
                 message(f"len= {len(fins_dividend)}")
-                if len(fins_dividend) > 0:
-                    fins_dividend.to_csv(output_path, mode='a', header=pagination_key is None, index=False)
+                if not fins_dividend.empty:
+                    if pagination_key is None:
+                        fins_dividend.to_csv(output_path, index=False)
+                    else:
+                        fins_dividend.to_csv(output_path, mode='a', header=False, index=False)
                     
                 pagination_key = ret.get("pagination_key")
                 if not pagination_key:
@@ -400,7 +427,11 @@ if __name__ == "__main__":
                 ret = jq.fins_announcement()
             
             fins_announcement = pd.DataFrame(ret["announcement"])
-            fins_announcement.to_csv(f"./data/fins_announcement.csv", mode='a', header=pagination_key is None, index=False)
+            if not fins_announcement.empty:
+                if pagination_key is None:
+                    fins_announcement.to_csv(f"./data/fins_announcement.csv", index=False)
+                else:
+                    fins_announcement.to_csv(f"./data/fins_announcement.csv", mode='a', header=False, index=False)
 
             pagination_key = ret.get("pagination_key")
             if not pagination_key:
@@ -428,7 +459,11 @@ if __name__ == "__main__":
                     ret = jq.option_index_option(date=date)
                 
                 option_index_option = pd.DataFrame(ret["index_option"])
-                option_index_option.to_csv(output_path, mode='a', header=pagination_key is None, index=False)
+                if not option_index_option.empty:
+                    if pagination_key is None:
+                        option_index_option.to_csv(output_path, index=False)
+                    else:
+                        option_index_option.to_csv(output_path, mode='a', header=False, index=False)
 
                 pagination_key = ret.get("pagination_key")
                 if not pagination_key:
