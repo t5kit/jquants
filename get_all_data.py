@@ -359,7 +359,7 @@ if __name__ == "__main__":
 
                 fins_fs_details = pd.DataFrame(ret["fs_details"])
                 message(f"len= {len(fins_fs_details)}")
-                if not fins_fs_details.empyt:
+                if not fins_fs_details.empty:
                     if pagination_key is None:
                         fins_fs_details.to_csv(output_path, index=False)
                     else:
