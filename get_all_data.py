@@ -2,7 +2,7 @@ import jquants
 from getpass import getpass
 import os
 import pandas as pd
-from datetime import datetime, timedelta
+from datetime import datetime
 import sys
 import pytz
 
@@ -51,12 +51,12 @@ if __name__ == "__main__":
 
     # 日本のタイムゾーンを取得
     jst = pytz.timezone('Asia/Tokyo')
-    yesterday = datetime.now(jst) - timedelta(days=1)
-    yesterday_str = yesterday.strftime("%Y-%m-%d")
+    today = datetime.now(jst)
+    today_str = today.strftime("%Y-%m-%d")
 
     date_list = markets_trading_calendar[
         (markets_trading_calendar["Date"] >= until_date_str)&
-        (markets_trading_calendar["Date"] <= yesterday_str)&
+        (markets_trading_calendar["Date"] <= today_str)&
         (markets_trading_calendar["HolidayDivision"] != "0")]["Date"].values.tolist()
 
     message("listed_info")
