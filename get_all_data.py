@@ -87,7 +87,7 @@ if __name__ == "__main__":
                     if pagination_key is None:
                         prices_daily_quotes.to_csv(output_path, index=False)
                     else:
-                        prices_daily_quotes.to_csv(output_path, mode='a', header=True, index=False)
+                        prices_daily_quotes.to_csv(output_path, mode='a', header=False, index=False)
 
                 pagination_key = ret.get("pagination_key")
                 if not pagination_key:
@@ -224,7 +224,7 @@ if __name__ == "__main__":
                     if pagination_key is None:
                         markets_breakdown.to_csv(output_path, index=False)
                     else:
-                        markets_breakdown.to_csv(output_path, mode='a', header=True, index=False)
+                        markets_breakdown.to_csv(output_path, mode='a', header=False, index=False)
 
                 pagination_key = ret.get("pagination_key")
                 if not pagination_key:
